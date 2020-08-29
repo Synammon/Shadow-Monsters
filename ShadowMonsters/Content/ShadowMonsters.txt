@@ -1,0 +1,6 @@
+﻿Dark1,Brownie,Dark,100,1,9,12,10,50,0,0,Tackle:1,Block:1
+Earth1,Beast,Earth,100,1,10,10,9,60,0,0,Tackle:1,Block:1
+Fire1,Efreet,Fire,100,1,12,8,10,50,0,0,Tackle:1,Block:1
+Light1,Paladin,Light,100,1,12,9,10,50,0,0,Tackle:1,Block:1
+Water1,Siren,Water,100,1,9,12,10,50,0,0,Tackle:1,Block:1
+Wind1,Harpy,Wind,100,1,10,10,12,50,0,0,Tackle:1,Block:1
