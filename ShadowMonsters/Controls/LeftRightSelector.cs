@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ShadowMonsters.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,10 +94,8 @@ namespace ShadowMonsters.Controls
 
         protected void OnSelectionChanged()
         {
-            if (SelectionChanged != null)
-            {
-                SelectionChanged(this, null);
-            }
+            Muse.PlaySoundEffect("menu_click");
+            SelectionChanged?.Invoke(this, null);
         }
 
         #endregion

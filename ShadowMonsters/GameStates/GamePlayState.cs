@@ -37,6 +37,26 @@ namespace ShadowMonsters.GameStates
 
         protected override void LoadContent()
         {
+            Texture2D texture = new Texture2D(GraphicsDevice, 16, 16);
+            Color[] buffer = new Color[16 * 16];
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = new Color(255, 0, 0, 128);
+            }
+
+            texture.SetData(buffer);
+
+            CollisionLayer.Texture = texture;
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = new Color(0, 0, 255, 128);
+            }
+
+            texture.SetData(buffer);
+
+            PortalLayer.Texture = texture;
             base.LoadContent();
         }
 
@@ -56,6 +76,11 @@ namespace ShadowMonsters.GameStates
         {
             frameCount++;
             HandleMovement(gameTime);
+
+            if (Xin.CheckKeyReleased(Keys.Escape))
+            {
+                manager.ChangeState(GameRef.MainMenuState);
+            }
 
             if ((Xin.CheckKeyReleased(Keys.Space) ||
                 Xin.CheckKeyReleased(Keys.Enter)) && frameCount >= 5)
@@ -221,6 +246,21 @@ namespace ShadowMonsters.GameStates
                     }
                 }
 
+                foreach (Point p in world.Map.CollisionLayer.Collisions.Keys)
+                {
+                    Rectangle r = new Rectangle(
+                        p.X * Engine.TileWidth,
+                        p.Y * Engine.TileHeight,
+                        Engine.TileWidth,
+                        Engine.TileHeight);
+
+                    if (r.Intersects(pRect))
+                    {
+                        motion = Vector2.Zero;
+                        Game1.Player.Sprite.IsAnimating = false;
+                        inMotion = false;
+                    }
+                }
                 Vector2 newPosition = Game1.Player.Sprite.Position + motion;
                 newPosition.X = (int)newPosition.X;
                 newPosition.Y = (int)newPosition.Y;
@@ -438,12 +478,15 @@ namespace ShadowMonsters.GameStates
         {
             MoveManager.FillMoves();
             ShadowMonsterManager.FromFile(@".\Content\ShadowMonsters.txt", content);
+
             Game1.Player.AddShadowMonster(ShadowMonsterManager.GetShadowMonster("water1"));
             Game1.Player.SetCurrentShadowMonster(0);
             Game1.Player.BattleShadowMonsters[0] = Game1.Player.GetShadowMonster(0);
-            TileSet set = new TileSet();
-            set.TextureNames.Add("tileset16-outdoors");
-            set.Textures.Add(content.Load<Texture2D>(@"Tiles\tileset16-outdoors"));
+
+            TileSet set = new TileSet(10, 10, 16, 16);
+
+            set.TextureNames.Add("tiny-16");
+            set.Textures.Add(content.Load<Texture2D>(@"Tiles\tiny-16"));
 
             TileLayer groundLayer = new TileLayer(100, 100, 0, 1);
             TileLayer edgeLayer = new TileLayer(100, 100);
@@ -452,7 +495,7 @@ namespace ShadowMonsters.GameStates
 
             for (int i = 0; i < 1000; i++)
             {
-                decorationLayer.SetTile(random.Next(0, 100), random.Next(0, 100), 0, random.Next(2, 4));
+                decorationLayer.SetTile(random.Next(0, 100), random.Next(0, 100), 0, 0);
             }
 
             TileMap map = new TileMap(set, groundLayer, edgeLayer, buildingLayer, decorationLayer, "level1");
@@ -474,6 +517,9 @@ namespace ShadowMonsters.GameStates
 
             map.CharacterLayer.Characters.Add(m.SourceTile, m);
 
+            map.CollisionLayer.Collisions.Add(new Point(5, 5), CollisionType.Impassable);
+            map.CollisionLayer.Collisions.Add(new Point(6, 6), CollisionType.Impassable);
+
             world = new World(new Portal(new Point(10, 10), new Point(10, 10), map.MapName));
             world.Maps.Add(map.MapName, map);
             world.ChangeMap(map.MapName);
@@ -485,7 +531,13 @@ namespace ShadowMonsters.GameStates
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            world.Draw(gameTime, GameRef.SpriteBatch, Engine.Camera);
+
+#if DEBUG
+            world.Draw(gameTime, GameRef.SpriteBatch, Engine.Camera, true);
+#else
+            world.Draw(gameTmie, GameRef.SpriteBatch, Engine.Camera);
+#endif
+
             GameRef.SpriteBatch.Begin(
                 SpriteSortMode.Deferred,
                 BlendState.AlphaBlend,

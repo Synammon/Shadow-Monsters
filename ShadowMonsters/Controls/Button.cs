@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShadowMonsters.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +75,7 @@ namespace ShadowMonsters.Controls
 
         private void OnClick()
         {
+            Muse.PlaySoundEffect("menu_click");
             Click?.Invoke(this, null);
         }
 

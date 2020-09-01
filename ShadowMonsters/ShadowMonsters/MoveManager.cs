@@ -28,6 +28,7 @@ namespace ShadowMonsters.ShadowMonsters
 
         public static void FillMoves()
         {
+            allMoves.Clear();
             allMoves.Add("Tackle", new Tackle());
             allMoves.Add("Block", new Block());
         }

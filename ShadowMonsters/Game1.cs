@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ShadowMonsters.Components;
 using ShadowMonsters.ConversationComponents;
 using ShadowMonsters.GameStates;
 using ShadowMonsters.TileEngine;
@@ -59,10 +61,12 @@ namespace ShadowMonsters
 
         public Game1()
         {
+            Settings.Load();
+
             graphics = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = 1280,
-                PreferredBackBufferHeight = 720
+                PreferredBackBufferWidth = Settings.Resolution.X,
+                PreferredBackBufferHeight = Settings.Resolution.Y
             };
 
             graphics.ApplyChanges();
@@ -83,6 +87,10 @@ namespace ShadowMonsters
 
             stateManager = new GameStateManager(this);
             Components.Add(stateManager);
+
+            Components.Add(new Muse(this));
+            Muse.SetEffectVolume(Settings.SoundVolume);
+            Muse.SetSongVolume(Settings.MusicVolume);
 
             gamePlayState = new GamePlayState(this);
             conversationState = new ConversationState(this);
@@ -154,7 +162,9 @@ namespace ShadowMonsters
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Muse.SoundEffects.Add(
+                "menu_click",
+                Content.Load<SoundEffect>(@"SoundEffects\Menu Selection Click"));
         }
 
         /// <summary>
@@ -173,9 +183,6 @@ namespace ShadowMonsters
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             // TODO: Add your update logic here
             base.Update(gameTime);
         }

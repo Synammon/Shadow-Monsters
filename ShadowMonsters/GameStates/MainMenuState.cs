@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using ShadowMonsters.Components;
 using ShadowMonsters.ShadowMonsters;
 using System;
@@ -47,6 +48,16 @@ namespace ShadowMonsters.GameStates
             texture.SetData(buffer);
 
             menu = new MenuComponent(GameRef, texture);
+            
+            if (!Muse.Songs.ContainsKey("main_menu"))
+            {
+                Muse.Songs.Add(
+                    "main_menu", 
+                    content.Load<Song>(@"Music\Augustin_C_-_22_-_Enchanted_Village"));
+                Muse.PlaySong("main_menu");
+                MediaPlayer.IsRepeating = true;
+            }
+
             Components.Add(menu);
         }
 
@@ -59,15 +70,24 @@ namespace ShadowMonsters.GameStates
                 menu.SetMenuItems(new[] { "New Game", "Continue", "Options", "Exit" });
             }
 
-            if (Xin.CheckKeyReleased(Keys.Enter) 
+            if (Xin.CheckKeyReleased(Keys.Escape))
+            {
+                GameRef.Exit();
+            }
+
+            if (Xin.CheckKeyReleased(Keys.Enter) ||
+                Xin.CheckKeyReleased(Keys.Space)
                 || (menu.MouseOver && Xin.CheckMouseReleased(MouseButtons.Left)) && frameCount > 5)
             {
+                Muse.PlaySoundEffect("menu_click");
+
                 switch (menu.SelectedIndex)
                 {
                     case 0:
                         manager.PopState();
                         manager.PushState(GameRef.GamePlayState);
                         GameRef.GamePlayState.SetUpNewGame();
+                        Muse.StopSong();
                         break;
                     case 1:
                         string path = Environment.GetFolderPath(
@@ -79,6 +99,7 @@ namespace ShadowMonsters.GameStates
                             return;
                         }
 
+                        Muse.StopSong();
                         MoveManager.FillMoves();
                         ShadowMonsterManager.FromFile(@".\Content\ShadowMonsters.txt", content);
                         manager.PopState();

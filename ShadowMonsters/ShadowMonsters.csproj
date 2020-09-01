@@ -60,6 +60,7 @@
     <Compile Include="Characters\Character.cs" />
     <Compile Include="Characters\Merchant.cs" />
     <Compile Include="Components\MenuComponent.cs" />
+    <Compile Include="Components\Muse.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlManager.cs" />

@@ -2441,6 +2441,12 @@
 /processorParam:TextureFormat=Color
 /build:GUI/g9452.png
 
+#begin Music/Augustin_C_-_22_-_Enchanted_Village.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Augustin_C_-_22_-_Enchanted_Village.mp3
+
 #begin ShadowMonsterImages/airDragon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3365,6 +3371,12 @@
 /processorParam:TextureFormat=Color
 /build:ShadowMonsterImages/zombie.png
 
+#begin SoundEffects/Menu Selection Click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/Menu Selection Click.wav
+
 #begin Sprites/mage_f.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3424,4 +3436,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tiles/tileset16-outdoors.png
+
+#begin Tiles/tiny-16.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/tiny-16.png
 
