@@ -1,6 +1,1 @@
-ï»¿Dark1,Brownie,Dark,100,1,9,12,10,50,0,0,Tackle:1,Block:1
-Earth1,Beast,Earth,100,1,10,10,9,60,0,0,Tackle:1,Block:1
-Fire1,Efreet,Fire,100,1,12,8,10,50,0,0,Tackle:1,Block:1
-Light1,Paladin,Light,100,1,12,9,10,50,0,0,Tackle:1,Block:1
-Water1,Siren,Water,100,1,9,12,10,50,0,0,Tackle:1,Block:1
-Wind1,Harpy,Wind,100,1,10,10,12,50,0,0,Tackle:1,Block:1
+=*ókñ­\¯tÿ\ĞÉrBV€ üƒ³&¹‡‰MvMƒ¡'"Ó„§LI•¹&¾æq|Jëc;¼²qmñ…OÎ ¡FíuI_œı*uNBŒ9õ¼[Çyü}Et<=³ÍàzG>ZÏ‘®¡	¢$-o#oî”¹¡·Şåğ‰74§u0©ğ‘ÔÁ©d_–Ğ/ÚÊœÇ‚T´ğ Ô*Oƒ@ÑmÌäªCül~ŸAœ-c5|‰ŞÔf½òÔ‚ŞŸøTD{X_L+2’š¢ÏB6†^yS/9:¾Àwás8›o.eu8ZŒˆvUzš×óVjãZÛ<`„IrènÊ¢œ$àcÌQÇ	?õN²QQ¼5æc¨‹º<º±0$C*C©IÚéÛ¯éÚcmÛDª	v»ë·Ua/™A•&ân7ÈªªÆµğ ğrï›<háQv5ôó•XSÀ5ñP™Æ˜óØ×p‹;OG*d4…‰ËL-…+s¿C®bì»î×

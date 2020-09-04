@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,18 @@ namespace ShadowMonsters.ShadowMonsters
     public class ShadowMonsterManager
     {
         #region Field Region
+
+        private static readonly byte[] IV = new byte[]
+        {
+            067, 197, 032, 010, 211, 090, 192, 076,
+            054, 154, 111, 023, 243, 071, 132, 090
+        };
+
+        private static readonly byte[] Key = new byte[]
+        {
+            067, 090, 197, 043, 049, 029, 178, 211,
+            127, 255, 097, 233, 162, 067, 111, 022,
+        };
 
         private static readonly Dictionary<string, ShadowMonster> monsterList = new Dictionary<string, ShadowMonster>();
 
@@ -47,46 +60,39 @@ namespace ShadowMonsters.ShadowMonsters
 
         public static void FromFile(string fileName, ContentManager content)
         {
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            using (Aes aes = Aes.Create())
             {
+                aes.IV = IV;
+                aes.Key = Key;
+
                 try
                 {
-                    using (TextReader reader = new StreamReader(stream))
+                    ICryptoTransform decryptor = aes.CreateDecryptor(Key, IV);
+                    FileStream stream = new FileStream(
+                        fileName,
+                        FileMode.Open,
+                        FileAccess.Read);
+                    using (CryptoStream cryptoStream = new CryptoStream(
+                        stream,
+                        decryptor,
+                        CryptoStreamMode.Read))
                     {
-                        try
+                        using (BinaryReader reader = new BinaryReader(cryptoStream))
                         {
-                            string lineIn = "";
+                            int count = reader.ReadInt32();
 
-                            do
+                            for (int i = 0; i < count; i++)
                             {
-                                lineIn = reader.ReadLine();
-                                if (lineIn != null)
-                                {
-                                    ShadowMonster monster = ShadowMonster.FromString(lineIn, content);
-                                    if (!monsterList.ContainsKey(monster.Name.ToLowerInvariant()))
-                                        monsterList.Add(monster.Name.ToLowerInvariant(), monster);
-                                }
-                            } while (lineIn != null);
-                        }
-                        catch (Exception exc)
-                        {
-                            exc.GetType();
-                        }
-                        finally
-                        {
-                            if (reader != null)
-                                reader.Close();
+                                string data = reader.ReadString();
+                                reader.ReadInt32();
+                                ShadowMonster monster = ShadowMonster.FromString(data, content);
+                                ShadowMonsterManager.AddShadowMonster(monster.Name, monster);
+                            }
                         }
                     }
                 }
-                catch (Exception exc)
+                catch
                 {
-                    exc.GetType();
-                }
-                finally
-                {
-                    if (stream != null)
-                        stream.Close();
                 }
             }
         }

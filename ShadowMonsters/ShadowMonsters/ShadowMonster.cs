@@ -56,6 +56,11 @@ namespace ShadowMonsters.ShadowMonsters
             get { return displayName; }
         }
 
+        public int Cost
+        {
+            get { return costToBuy; }
+        }
+
         public int Level
         {
             get { return level; }
@@ -528,6 +533,59 @@ namespace ShadowMonsters.ShadowMonsters
             monster.name = parts[0];
             monster.displayName = parts[1];
             monster.texture = content.Load<Texture2D>(@"ShadowMonsterImages\" + parts[1]);
+            monster.element = (ShadowMonsterElement)Enum.Parse(typeof(ShadowMonsterElement), parts[2]);
+            monster.costToBuy = int.Parse(parts[3]);
+            monster.level = int.Parse(parts[4]);
+            monster.attack = int.Parse(parts[5]);
+            monster.defense = int.Parse(parts[6]);
+            monster.speed = int.Parse(parts[7]);
+            monster.health = int.Parse(parts[8]);
+            monster.currentHealth = monster.health;
+            monster.Source = new Rectangle(int.Parse(parts[9]), int.Parse(parts[10]), 64, 64);
+
+            monster.knownMoves = new Dictionary<string, IMove>();
+
+            for (int i = 11; i < parts.Length; i++)
+            {
+                string[] moveParts = parts[i].Split(':');
+
+                if (moveParts[0] != "None")
+                {
+                    IMove move = MoveManager.GetMove(moveParts[0]);
+                    move.UnlockedAt = int.Parse(moveParts[1]);
+
+                    if (move.UnlockedAt <= monster.Level)
+                    {
+                        move.Unlock();
+                    }
+
+                    monster.knownMoves.Add(move.Name, move);
+                }
+            }
+            return monster;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(Name + "," + DisplayName + "," + Element.ToString() + "," + costToBuy + ",");
+            sb.Append(Level + "," + attack + "," + defense + "," + speed + "," + health + ",0,0");
+
+            foreach(IMove move in KnownMoves.Values)
+            {
+                sb.Append("," + move.Name + ":" + move.UnlockedAt);
+            }
+            return sb.ToString();
+        }
+
+        public static ShadowMonster FromString(string lineIn)
+        {
+            ShadowMonster monster = new ShadowMonster();
+            string[] parts = lineIn.Split(',');
+
+            monster.name = parts[0];
+            monster.displayName = parts[1];
             monster.element = (ShadowMonsterElement)Enum.Parse(typeof(ShadowMonsterElement), parts[2]);
             monster.costToBuy = int.Parse(parts[3]);
             monster.level = int.Parse(parts[4]);

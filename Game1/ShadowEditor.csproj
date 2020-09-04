@@ -54,6 +54,18 @@
     <Compile Include="CharacterListForm.Designer.cs">
       <DependentUpon>CharacterListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DefinitionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DefinitionForm.Designer.cs">
+      <DependentUpon>DefinitionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DefinitionListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DefinitionListForm.Designer.cs">
+      <DependentUpon>DefinitionListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor.cs" />
     <Compile Include="MerchantForm.cs">
       <SubType>Form</SubType>
@@ -119,6 +131,12 @@
   <ItemGroup>
     <EmbeddedResource Include="CharacterForm.resx">
       <DependentUpon>CharacterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DefinitionForm.resx">
+      <DependentUpon>DefinitionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DefinitionListForm.resx">
+      <DependentUpon>DefinitionListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Icon.ico" />
     <EmbeddedResource Include="Icon.bmp" />

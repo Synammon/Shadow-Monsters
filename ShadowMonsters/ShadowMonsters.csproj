@@ -99,8 +99,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShadowMonsters\Block.cs" />
+    <Compile Include="ShadowMonsters\Bubble.cs" />
+    <Compile Include="ShadowMonsters\Flare.cs" />
+    <Compile Include="ShadowMonsters\Gust.cs" />
+    <Compile Include="ShadowMonsters\Heal.cs" />
     <Compile Include="ShadowMonsters\IMove.cs" />
     <Compile Include="ShadowMonsters\MoveManager.cs" />
+    <Compile Include="ShadowMonsters\RockToss.cs" />
+    <Compile Include="ShadowMonsters\Shade.cs" />
     <Compile Include="ShadowMonsters\ShadowMonster.cs" />
     <Compile Include="ShadowMonsters\ShadowMonsterManager.cs" />
     <Compile Include="ShadowMonsters\Tackle.cs" />

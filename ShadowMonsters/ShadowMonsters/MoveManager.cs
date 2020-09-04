@@ -18,6 +18,7 @@ namespace ShadowMonsters.ShadowMonsters
         #region Property Region
 
         public static Random Random => random;
+        public static Dictionary<string, IMove> Moves { get { return allMoves; } }
 
         #endregion
 
@@ -31,6 +32,12 @@ namespace ShadowMonsters.ShadowMonsters
             allMoves.Clear();
             allMoves.Add("Tackle", new Tackle());
             allMoves.Add("Block", new Block());
+            allMoves.Add("Bubble", new Bubble());
+            allMoves.Add("Flare", new Flare());
+            allMoves.Add("Gust", new Gust());
+            allMoves.Add("Heal", new Heal());
+            allMoves.Add("Rock Toss", new RockToss());
+            allMoves.Add("Shade", new Shade());
         }
 
         public static IMove GetMove(string name)

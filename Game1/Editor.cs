@@ -505,6 +505,11 @@ namespace ShadowEditor
                 frm.ShowDialog();
             }
 
+            if (Xin.CheckKeyReleased(Keys.Q) && frameCount > 5)
+            {
+                DefinitionListForm frm = new DefinitionListForm();
+                frm.ShowDialog();
+            }
             if (Xin.CheckKeyReleased(Keys.W) && frameCount > 5)
             { 
                 if (world != null)
