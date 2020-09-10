@@ -14,6 +14,16 @@ namespace ShadowMonsters
         private static float soundVolume = 0.5f;
         private static Point resolution = new Point(1280, 720);
         
+        public static Vector2 Scale
+        {
+            get
+            {
+                return new Vector2(
+                    (float)resolution.X / 1280, 
+                    (float)resolution.Y / 720);
+            }
+        }
+
         public static float MusicVolume 
         {
             get

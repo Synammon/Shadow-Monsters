@@ -67,6 +67,7 @@
     <Compile Include="Controls\LeftRightSelector.cs" />
     <Compile Include="Controls\ListBox.cs" />
     <Compile Include="Controls\PictureBox.cs" />
+    <Compile Include="Controls\TextBox.cs" />
     <Compile Include="ConversationComponents\Conversation.cs" />
     <Compile Include="ConversationComponents\ConversationManager.cs" />
     <Compile Include="ConversationComponents\GameScene.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="GameStates\ItemSelectionState.cs" />
     <Compile Include="GameStates\LevelUpState.cs" />
     <Compile Include="GameStates\MainMenuState.cs" />
+    <Compile Include="GameStates\NewGameState.cs" />
     <Compile Include="GameStates\OptionState.cs" />
     <Compile Include="GameStates\ShadowMonsterSelectionState.cs" />
     <Compile Include="GameStates\ShopState.cs" />

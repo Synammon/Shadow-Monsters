@@ -36,6 +36,7 @@ namespace ShadowMonsters
         private readonly UseItemState useItemState;
         private readonly MainMenuState mainMenuState;
         private readonly OptionState optionState;
+        private readonly NewGameState newGameState;
 
         public static readonly Dictionary<string, Point> Resolutions = 
             new Dictionary<string, Point>();
@@ -55,6 +56,7 @@ namespace ShadowMonsters
         public UseItemState UseItemState => useItemState;
         public ItemSelectionState ItemSelectionState => itemSelectionState;
         public MainMenuState MainMenuState => mainMenuState;
+        public NewGameState NewGameState => newGameState;
         public OptionState OptionState => optionState;
         public GraphicsDeviceManager Graphics => graphics;
         public static Dictionary<AnimationKey, Animation> Animations => animations;
@@ -106,6 +108,7 @@ namespace ShadowMonsters
             useItemState = new UseItemState(this);
             mainMenuState = new MainMenuState(this);
             optionState = new OptionState(this);
+            newGameState = new NewGameState(this);
 
             stateManager.PushState(mainMenuState);
             ConversationManager.Instance.CreateConversations(this);
@@ -133,8 +136,6 @@ namespace ShadowMonsters
             Components.Add(new Xin(this));
             Components.Add(new FontManager(this));
 
-            
-            Game1.Player = new Player(this, "Bonnie", true, @"Sprites\mage_f");
             base.Initialize();
         }
 

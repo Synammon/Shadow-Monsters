@@ -85,9 +85,7 @@ namespace ShadowMonsters.GameStates
                 {
                     case 0:
                         manager.PopState();
-                        manager.PushState(GameRef.GamePlayState);
-                        GameRef.GamePlayState.SetUpNewGame();
-                        Muse.StopSong();
+                        manager.PushState(GameRef.NewGameState);
                         break;
                     case 1:
                         string path = Environment.GetFolderPath(

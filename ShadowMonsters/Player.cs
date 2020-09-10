@@ -98,9 +98,13 @@ namespace ShadowMonsters
             this.name = name;
             this.gender = gender;
 
-            this.textureName = textureName;
+            if (gender)
+                this.textureName = textureName + "_f";
+            else
+                this.textureName = textureName + "_m";
+
             sprite = new AnimatedSprite(
-                game.Content.Load<Texture2D>(textureName), 
+                game.Content.Load<Texture2D>(@"CharacterSprites\" + this.textureName), 
                 Game1.Animations)
             {
                 CurrentAnimation = AnimationKey.WalkDown

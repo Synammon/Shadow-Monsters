@@ -71,6 +71,16 @@ namespace ShadowMonsters
             return currentKeyboardState.IsKeyUp(key) && previousKeyboardState.IsKeyDown(key);
         }
 
+        public static bool CheckKeyPressed(Keys key)
+        {
+            return currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key);
+        }
+
+        public static bool IsKeyDown(Keys key)
+        {
+            return currentKeyboardState.IsKeyDown(key);
+        }
+
         public static bool CheckMouseReleased(MouseButtons button)
         {
             switch (button)
