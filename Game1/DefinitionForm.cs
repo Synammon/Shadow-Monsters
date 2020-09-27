@@ -27,6 +27,8 @@ namespace ShadowEditor
                 cboElement.Items.Add(v);
             }
 
+            cboElement.SelectedIndex = 0;
+
             BtnOK.Click += BtnOK_Click;
             BtnCancel.Click += BtnCancel_Click;
             BtnAdd.Click += BtnAdd_Click;
@@ -39,6 +41,7 @@ namespace ShadowEditor
             TxtName.Text = m.DisplayName;
             cboElement.SelectedItem = m.Element;
             TxtCost.Text = m.Cost.ToString();
+            TxtLevel.Text = m.Level.ToString();
             TxtAttack.Text = m.BaseAttack.ToString();
             TxtDefense.Text = m.BaseDefense.ToString();
             TxtSpeed.Text = m.BaseSpeed.ToString();
@@ -64,43 +67,43 @@ namespace ShadowEditor
                 return;
             }
 
-            if (string.IsNullOrEmpty(TxtCost.Text) 
-                || int.TryParse(TxtCost.Text, out int cost))
+            if (string.IsNullOrEmpty(TxtCost.Text)
+                || !int.TryParse(TxtCost.Text, out int cost))
             {
                 MessageBox.Show("You must enter a numeric value for cost");
                 return;
             }
 
             if (string.IsNullOrEmpty(TxtLevel.Text)
-                || int.TryParse(TxtLevel.Text, out int level))
+                || !int.TryParse(TxtLevel.Text, out int level))
             {
                 MessageBox.Show("You must enter a numeric value for level,");
                 return;
             }
 
             if (string.IsNullOrEmpty(TxtAttack.Text)
-                || int.TryParse(TxtAttack.Text, out int attack))
+                || !int.TryParse(TxtAttack.Text, out int attack))
             {
                 MessageBox.Show("You must enter a numeric value for attack,");
                 return;
             }
 
             if (string.IsNullOrEmpty(TxtDefense.Text)
-                || int.TryParse(TxtDefense.Text, out int defense))
+                || !int.TryParse(TxtDefense.Text, out int defense))
             {
                 MessageBox.Show("You must enter a numeric value for defense.");
                 return;
             }
 
             if (string.IsNullOrEmpty(TxtSpeed.Text)
-                || int.TryParse(TxtSpeed.Text, out int speed))
+                || !int.TryParse(TxtSpeed.Text, out int speed))
             {
                 MessageBox.Show("You must enter a numeric value for speed,");
                 return;
             }
 
             if (string.IsNullOrEmpty(TxtHealth.Text)
-                || int.TryParse(TxtHealth.Text, out int health))
+                || !int.TryParse(TxtHealth.Text, out int health))
             {
                 MessageBox.Show("You must enter a numeric value for health,");
                 return;
@@ -108,8 +111,8 @@ namespace ShadowEditor
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(TxtKey.Text + "," + TxtName.Text + "," + cost + ",");
-            sb.Append(attack + "," + defense + "," + speed + "," + health + ",0,0");
+            sb.Append(TxtKey.Text + "," + TxtName.Text + "," + cboElement.SelectedItem + "," + cost + ",");
+            sb.Append(level + "," + attack + "," + defense + "," + speed + "," + health + ",0,0");
 
             foreach (object o in LBMoves.Items)
             {
@@ -149,6 +152,8 @@ namespace ShadowEditor
             {
                 CboMoves.Items.Add(move.Name);
             }
+
+            CboMoves.SelectedIndex = 1;
         }
     }
 }

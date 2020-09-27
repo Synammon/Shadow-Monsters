@@ -112,6 +112,15 @@ namespace ShadowMonsters.Controls
             set { _type = value; }
         }
 
+        public virtual int Width
+        {
+            get { return (int)_size.X; }
+        }
+
+        public virtual int Height
+        {
+            get { return (int)_size.Y; }
+        }
         #endregion
 
         #region Constructor Region

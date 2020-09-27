@@ -81,6 +81,10 @@ namespace ShadowMonsters
             set { mapName = value; }
         }
 
+        public Point Tile
+        {
+            get { return tile; }
+        }
         #endregion
 
         #region Constructor Region

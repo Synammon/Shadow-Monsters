@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ShadowMonsters.GameStates
@@ -30,6 +31,7 @@ namespace ShadowMonsters.GameStates
         private Rectangle collision;
         private ShadowMonsterManager monsterManager = new ShadowMonsterManager();
         private int frameCount = 0;
+        private bool subscribed;
 
         public GamePlayState(Game game) : base(game)
         {
@@ -79,7 +81,17 @@ namespace ShadowMonsters.GameStates
 
             if (Xin.CheckKeyReleased(Keys.Escape))
             {
-                manager.ChangeState(GameRef.MainMenuState);
+                manager.PushState(GameRef.YesNoState);
+                GameRef.YesNoState.Message = "Are you sure you want to quit? Unsaved progress will be lost.";
+                Visible = true;
+                GameRef.YesNoState.Show();
+
+                if (!subscribed)
+                {
+                    GameRef.YesNoState.YesButton.Click += YesButton_Click;
+                    GameRef.YesNoState.NoButton.Click += NoButton_Click;
+                    subscribed = true;
+                }
             }
 
             if ((Xin.CheckKeyReleased(Keys.Space) ||
@@ -118,6 +130,16 @@ namespace ShadowMonsters.GameStates
             Game1.Player.Update(gameTime);
 
             base.Update(gameTime);
+        }
+
+        private void NoButton_Click(object sender, EventArgs e)
+        {
+            manager.PopState();
+        }
+
+        private void YesButton_Click(object sender, EventArgs e)
+        {
+            manager.ChangeState(GameRef.MainMenuState);
         }
 
         private void HandlePortals()
@@ -476,6 +498,12 @@ namespace ShadowMonsters.GameStates
 
         internal void SetUpNewGame()
         {
+            Task.Factory.StartNew(() => HandleNew());
+        }
+
+        private void HandleNew()
+        {
+            Thread.Sleep(4000);
             MoveManager.FillMoves();
             ShadowMonsterManager.FromFile(@".\Content\ShadowMonsters.txt", content);
 
@@ -526,6 +554,7 @@ namespace ShadowMonsters.GameStates
             Game1.Player.Sprite.Position = new Vector2(
                 world.StartingMap.SourceTile.X * Engine.TileWidth,
                 world.StartingMap.SourceTile.Y * Engine.TileHeight);
+            manager.PopState();
         }
 
         public override void Draw(GameTime gameTime)
@@ -535,7 +564,7 @@ namespace ShadowMonsters.GameStates
 #if DEBUG
             world.Draw(gameTime, GameRef.SpriteBatch, Engine.Camera, true);
 #else
-            world.Draw(gameTmie, GameRef.SpriteBatch, Engine.Camera);
+            world.Draw(gameTime, GameRef.SpriteBatch, Engine.Camera);
 #endif
 
             GameRef.SpriteBatch.Begin(
@@ -556,6 +585,18 @@ namespace ShadowMonsters.GameStates
                 new Rectangle(0, 0, Settings.Resolution.X, Settings.Resolution.Y),
                 Settings.TileSize.X,
                 Settings.TileSize.Y);
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+
+            if (subscribed)
+            {
+                GameRef.YesNoState.YesButton.Click -= YesButton_Click;
+                GameRef.YesNoState.NoButton.Click -= NoButton_Click;
+                subscribed = false;
+            }
         }
     }
 }

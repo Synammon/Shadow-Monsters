@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ShadowMonsters.Controls;
+using ShadowMonsters.TileEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace ShadowMonsters.GameStates
         Button apply;
         Button back;
         Button save;
+        TimeSpan timer;
+        Point previousResolution;
+        private bool countDown;
+        private bool subscribed;
 
         #endregion
 
@@ -92,11 +97,71 @@ namespace ShadowMonsters.GameStates
             GameRef.GraphicsDeviceManager.PreferredBackBufferWidth = Game1.Resolutions[resolutions.SelectedItem].X;
             GameRef.GraphicsDeviceManager.PreferredBackBufferHeight = Game1.Resolutions[resolutions.SelectedItem].Y;
             GameRef.GraphicsDeviceManager.ApplyChanges();
+
+            previousResolution = Settings.Resolution;
             Settings.Resolution = Game1.Resolutions[resolutions.SelectedItem];
+            GameRef.GamePlayState.ResetEngine();
+
+            if (Game1.Player != null)
+            {
+                Game1.Player.Sprite.Position = new Vector2(
+                    Game1.Player.Tile.X * Engine.TileWidth,
+                    Game1.Player.Tile.Y * Engine.TileHeight);
+            }
+
+            manager.PushState(GameRef.YesNoState);
+
+            GameRef.YesNoState.Message = "Keep changes?";
+
+            if (!subscribed)
+            {
+                GameRef.YesNoState.YesButton.Click += YesButton_Click;
+                GameRef.YesNoState.NoButton.Click += NoButton_Click;
+                subscribed = true;
+            }
+
+            Visible = true;
+            Enabled = true;
+
+            timer = TimeSpan.FromSeconds(15);
+            countDown = true;
+        }
+
+        private void NoButton_Click(object sender, EventArgs e)
+        {
+            Settings.Resolution = previousResolution;
+
+            GameRef.GraphicsDeviceManager.PreferredBackBufferWidth = Settings.Resolution.X;
+            GameRef.GraphicsDeviceManager.PreferredBackBufferHeight = Settings.Resolution.Y;
+            GameRef.GraphicsDeviceManager.ApplyChanges();
+            manager.PopState();
+            countDown = false;
+
+            if (Game1.Player != null)
+            {
+                Game1.Player.Sprite.Position = new Vector2(
+                    Game1.Player.Tile.X * Engine.TileWidth,
+                    Game1.Player.Tile.Y * Engine.TileHeight);
+            }
+        }
+
+        private void YesButton_Click(object sender, EventArgs e)
+        {
+            manager.PopState();
+            countDown = false;
         }
 
         public override void Update(GameTime gameTime)
         {
+            timer -= gameTime.ElapsedGameTime;
+
+            if (timer <= TimeSpan.Zero && countDown)
+            {
+                countDown = false;
+                manager.PopState();
+                NoButton_Click(this, null);
+            }
+
             resolutions.Update(gameTime);
             apply.Update(gameTime);
             back.Update(gameTime);
@@ -114,6 +179,35 @@ namespace ShadowMonsters.GameStates
             back.Draw(GameRef.SpriteBatch);
             save.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();
+        }
+
+        public override void Show()
+        {
+            base.Show();
+            int count = 0;
+
+            foreach (var v in Game1.Resolutions.Values)
+            {
+                if (v == Settings.Resolution)
+                {
+                    resolutions.SelectedIndex = count;
+                    break;
+                }
+
+                count++;
+            }
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+
+            if (subscribed)
+            {
+                GameRef.YesNoState.YesButton.Click -= YesButton_Click;
+                GameRef.YesNoState.NoButton.Click -= NoButton_Click;
+                subscribed = false;
+            }
         }
 
         #endregion

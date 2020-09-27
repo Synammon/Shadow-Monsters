@@ -38,7 +38,6 @@ namespace ShadowMonsters.GameStates
         protected override void LoadContent()
         {
             _background = content.Load<Texture2D>(@"chargen-back");
-            _foreground = content.Load<Texture2D>(@"chargen-fore");
 
             _genderSelector = new LeftRightSelector(
                 content.Load<Texture2D>(@"GUI\g22987"),
@@ -129,9 +128,10 @@ namespace ShadowMonsters.GameStates
                 _genderSelector.SelectedIndex == 0, 
                 _portraitSelector.SelectedItem.Replace(" ", "-"));
             Muse.StopSong();
-            GameRef.GamePlayState.SetUpNewGame();
             manager.PopState();
             manager.PushState(GameRef.GamePlayState);
+            manager.PushState(GameRef.LoadingState);
+            GameRef.GamePlayState.SetUpNewGame();
         }
 
         private void _genderSelector_SelectionChanged(object sender, EventArgs e)
@@ -191,11 +191,6 @@ namespace ShadowMonsters.GameStates
             _nameTextBox.Draw(GameRef.SpriteBatch);
             _create.Draw(GameRef.SpriteBatch);
             _back.Draw(GameRef.SpriteBatch);
-
-            GameRef.SpriteBatch.Draw(
-                _foreground, 
-                _destination.Scale(Settings.Scale), 
-                Color.White);
 
             base.Draw(gameTime);
 

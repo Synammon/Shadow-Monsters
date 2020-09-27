@@ -111,6 +111,18 @@
     <Compile Include="ShadowMonsterListForm.Designer.cs">
       <DependentUpon>ShadowMonsterListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WildAreaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WildAreaForm.Designer.cs">
+      <DependentUpon>WildAreaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WildAreaListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WildAreaListForm.designer.cs">
+      <DependentUpon>WildAreaListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +157,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShadowMonsterForm.resx">
       <DependentUpon>ShadowMonsterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WildAreaForm.resx">
+      <DependentUpon>WildAreaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WildAreaListForm.resx">
+      <DependentUpon>WildAreaListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorldForm.resx">
       <DependentUpon>WorldForm.cs</DependentUpon>

@@ -85,13 +85,16 @@
     <Compile Include="GameStates\GamePlayState.cs" />
     <Compile Include="GameStates\ItemSelectionState.cs" />
     <Compile Include="GameStates\LevelUpState.cs" />
+    <Compile Include="GameStates\LoadingState.cs" />
     <Compile Include="GameStates\MainMenuState.cs" />
     <Compile Include="GameStates\NewGameState.cs" />
     <Compile Include="GameStates\OptionState.cs" />
     <Compile Include="GameStates\ShadowMonsterSelectionState.cs" />
     <Compile Include="GameStates\ShopState.cs" />
     <Compile Include="GameStates\StartBattleState.cs" />
+    <Compile Include="GameStates\TitleState.cs" />
     <Compile Include="GameStates\UseItemState.cs" />
+    <Compile Include="GameStates\YesNoState.cs" />
     <Compile Include="Items\Antidote.cs" />
     <Compile Include="Items\Backpack.cs" />
     <Compile Include="Items\IItem.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="TileEngine\TileLayer.cs" />
     <Compile Include="TileEngine\TileMap.cs" />
     <Compile Include="TileEngine\TileSet.cs" />
+    <Compile Include="TileEngine\WildLayer.cs" />
     <Compile Include="TileEngine\World.cs" />
     <Compile Include="Xin.cs" />
   </ItemGroup>

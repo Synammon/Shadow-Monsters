@@ -39,6 +39,16 @@ namespace ShadowMonsters
             get { return previousMouseState; }
         }
 
+        public static bool CheckAnyKeyPressed()
+        {
+            return (currentKeyboardState.GetPressedKeys().Length > 0 && previousKeyboardState.GetPressedKeys().Length == 0);
+        }
+
+        public static bool CheckAnyKeyReleased()
+        {
+            return currentKeyboardState.GetPressedKeys().Length < previousKeyboardState.GetPressedKeys().Length;
+        }
+
         public static Point MouseAsPoint { get; internal set; }
 
         public Xin(Game game)

@@ -37,6 +37,15 @@ namespace ShadowMonsters
         private readonly MainMenuState mainMenuState;
         private readonly OptionState optionState;
         private readonly NewGameState newGameState;
+        public NewGameState NewGameState => newGameState;
+
+        private readonly TitleState titleState;
+        private readonly LoadingState loadingState;
+        private readonly YesNoState yesNoState;
+
+        public TitleState TitleState => titleState;
+        public LoadingState LoadingState => loadingState;
+        public YesNoState YesNoState => yesNoState;
 
         public static readonly Dictionary<string, Point> Resolutions = 
             new Dictionary<string, Point>();
@@ -56,7 +65,6 @@ namespace ShadowMonsters
         public UseItemState UseItemState => useItemState;
         public ItemSelectionState ItemSelectionState => itemSelectionState;
         public MainMenuState MainMenuState => mainMenuState;
-        public NewGameState NewGameState => newGameState;
         public OptionState OptionState => optionState;
         public GraphicsDeviceManager Graphics => graphics;
         public static Dictionary<AnimationKey, Animation> Animations => animations;
@@ -109,8 +117,11 @@ namespace ShadowMonsters
             mainMenuState = new MainMenuState(this);
             optionState = new OptionState(this);
             newGameState = new NewGameState(this);
+            titleState = new TitleState(this);
+            yesNoState = new YesNoState(this);
+            loadingState = new LoadingState(this);
 
-            stateManager.PushState(mainMenuState);
+            stateManager.PushState(titleState);
             ConversationManager.Instance.CreateConversations(this);
             IsMouseVisible = true;
         }

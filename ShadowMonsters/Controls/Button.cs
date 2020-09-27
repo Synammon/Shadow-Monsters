@@ -19,10 +19,20 @@ namespace ShadowMonsters.Controls
         #region Field Region
 
         Texture2D _background;
-       
+
         #endregion
 
         #region Property Region
+
+        public override int Width
+        {
+            get { return _background.Width; }
+        }
+
+        public override int Height
+        {
+            get { return _background.Height; }
+        }
         #endregion
 
         #region Constructor Region  
@@ -38,9 +48,7 @@ namespace ShadowMonsters.Controls
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 scale = new Vector2(
-                Settings.Resolution.X / 1280,
-                Settings.Resolution.Y / 720);
+            Vector2 scale = Settings.Scale;
 
             Rectangle destination = new Rectangle(
                 (int)Position.X, 
@@ -57,15 +65,11 @@ namespace ShadowMonsters.Controls
         public override void HandleInput()
         {
             Point position = Xin.MouseAsPoint;
-            Vector2 scale = new Vector2(
-                Settings.Resolution.X / 1280,
-                Settings.Resolution.Y / 720);
-
             Rectangle destination = new Rectangle(
                 (int)_position.X, 
                 (int)_position.Y, 
                 _background.Width, 
-                _background.Height).Scale(scale);
+                _background.Height).Scale(Settings.Scale);
 
             if (destination.Contains(position) && Xin.CheckMouseReleased(MouseButtons.Left))
             {
