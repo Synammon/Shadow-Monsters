@@ -92,6 +92,7 @@
     <Compile Include="GameStates\ShadowMonsterSelectionState.cs" />
     <Compile Include="GameStates\ShopState.cs" />
     <Compile Include="GameStates\StartBattleState.cs" />
+    <Compile Include="GameStates\StartMonsterBattleState.cs" />
     <Compile Include="GameStates\TitleState.cs" />
     <Compile Include="GameStates\UseItemState.cs" />
     <Compile Include="GameStates\YesNoState.cs" />

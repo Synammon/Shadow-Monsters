@@ -23,6 +23,7 @@ namespace ShadowMonsters.TileEngine
         CollisionLayer collisionLayer;
         PortalLayer portalLayer;
         MonsterLayer monsterLayer;
+        WildLayer wildLayer;
 
         int mapWidth;
         int mapHeight;
@@ -92,6 +93,7 @@ namespace ShadowMonsters.TileEngine
 
         public MonsterLayer MonsterLayer => monsterLayer;
 
+        public WildLayer WildLayer => wildLayer;
         #endregion
 
         #region Constructor Region
@@ -102,6 +104,7 @@ namespace ShadowMonsters.TileEngine
             collisionLayer = new CollisionLayer();
             portalLayer = new PortalLayer();
             monsterLayer = new MonsterLayer();
+            wildLayer = new WildLayer();
         }
 
         private TileMap(TileSet tileSet, string mapName)
@@ -261,6 +264,7 @@ namespace ShadowMonsters.TileEngine
             portalLayer.Save(writer);
             collisionLayer.Save(writer);
             monsterLayer.Save(writer);
+            wildLayer.Save(writer);
 
             return true;
         }
@@ -279,6 +283,7 @@ namespace ShadowMonsters.TileEngine
             map.portalLayer = PortalLayer.Load(reader);
             map.collisionLayer = CollisionLayer.Load(reader);
             map.monsterLayer = MonsterLayer.Load(content, reader);
+            map.wildLayer = WildLayer.Load(reader);
 
             map.mapWidth = map.groundLayer.Width;
             map.mapHeight = map.groundLayer.Height;

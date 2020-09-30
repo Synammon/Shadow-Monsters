@@ -48,12 +48,15 @@ namespace ShadowEditor
 
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (LBAreas.SelectedIndex < 0)
+                return;
+
+            LBAreas.Items.RemoveAt(LBAreas.SelectedIndex);
+            map.WildLayer.Areas.RemoveAt(LBAreas.SelectedIndex);
         }
     }
 }

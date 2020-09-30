@@ -49,15 +49,6 @@ namespace ShadowMonsters.GameStates
 
             menu = new MenuComponent(GameRef, texture);
             
-            if (!Muse.Songs.ContainsKey("main_menu"))
-            {
-                Muse.Songs.Add(
-                    "main_menu", 
-                    content.Load<Song>(@"Music\Augustin_C_-_22_-_Enchanted_Village"));
-                Muse.PlaySong("main_menu");
-                MediaPlayer.IsRepeating = true;
-            }
-
             Components.Add(menu);
         }
 

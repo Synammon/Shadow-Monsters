@@ -41,6 +41,8 @@ namespace ShadowMonsters.GameStates
         private Texture2D ShadowMonsterHealth;
         private int frameCount = 0;
 
+        public static bool IsTrainerBattle { get; set; }
+
         public ActionSelectionState(Game game) : base(game)
         {
             playerRect = new Rectangle(10, 90, 400, 400);

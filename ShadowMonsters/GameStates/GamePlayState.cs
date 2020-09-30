@@ -28,6 +28,7 @@ namespace ShadowMonsters.GameStates
         private World world;
         private Vector2 motion;
         private bool inMotion;
+        private bool lastInMotion;
         private Rectangle collision;
         private ShadowMonsterManager monsterManager = new ShadowMonsterManager();
         private int frameCount = 0;
@@ -76,6 +77,42 @@ namespace ShadowMonsters.GameStates
 
         public override void Update(GameTime gameTime)
         {
+            if (lastInMotion != inMotion && motion == Vector2.Zero)
+            {
+                Game1.Player.Tile = Engine.VectorToCell(Engine.VectorFromOrigin(Game1.Player.Sprite.Center));
+                WildArea area = world.Map.WildLayer.Enter(Game1.Player.Tile);
+
+                if (area != null)
+                {
+                    lastInMotion = inMotion;
+
+                    if (random.Next(0, 100) < 20)
+                    {
+                        string m = area.Monsters[
+                                    random.Next(
+                                    0,
+                                    area.Monsters.Count)];
+
+                        ShadowMonster monster =
+                            (ShadowMonster)ShadowMonsterManager.GetShadowMonster(
+                                m).Clone();
+
+                        if (monster == null)
+                        {
+                            return;
+                        }
+
+                        GameRef.StartMonsterBattleState.SetCombatants(Game1.Player, monster);
+                        manager.PushState(GameRef.StartMonsterBattleState);
+                        ActionSelectionState.IsTrainerBattle = false;
+
+                        return;
+                    }
+                }
+            }
+
+            lastInMotion = inMotion;
+
             frameCount++;
             HandleMovement(gameTime);
 
@@ -503,11 +540,10 @@ namespace ShadowMonsters.GameStates
 
         private void HandleNew()
         {
-            Thread.Sleep(4000);
             MoveManager.FillMoves();
             ShadowMonsterManager.FromFile(@".\Content\ShadowMonsters.txt", content);
 
-            Game1.Player.AddShadowMonster(ShadowMonsterManager.GetShadowMonster("water1"));
+            Game1.Player.AddShadowMonster(ShadowMonsterManager.GetShadowMonster("Water1"));
             Game1.Player.SetCurrentShadowMonster(0);
             Game1.Player.BattleShadowMonsters[0] = Game1.Player.GetShadowMonster(0);
 
@@ -547,6 +583,17 @@ namespace ShadowMonsters.GameStates
 
             map.CollisionLayer.Collisions.Add(new Point(5, 5), CollisionType.Impassable);
             map.CollisionLayer.Collisions.Add(new Point(6, 6), CollisionType.Impassable);
+            
+            WildArea area = new WildArea
+            {
+                TopLeft = new Point(0, 0),
+                BottomRight = new Point(3, 3)
+            };
+
+            area.Monsters.Add("Dark1");
+            area.Monsters.Add("Earth1");
+
+            map.WildLayer.Areas.Add(area);
 
             world = new World(new Portal(new Point(10, 10), new Point(10, 10), map.MapName));
             world.Maps.Add(map.MapName, map);

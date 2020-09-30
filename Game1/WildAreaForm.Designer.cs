@@ -40,8 +40,6 @@
             this.BtnCancel = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.NudLevel = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.NudLevel)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -148,29 +146,11 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Selected";
             // 
-            // NudLevel
-            // 
-            this.NudLevel.Location = new System.Drawing.Point(174, 124);
-            this.NudLevel.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NudLevel.Name = "NudLevel";
-            this.NudLevel.Size = new System.Drawing.Size(120, 29);
-            this.NudLevel.TabIndex = 12;
-            this.NudLevel.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // WildAreaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 450);
-            this.Controls.Add(this.NudLevel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.BtnCancel);
@@ -185,7 +165,6 @@
             this.Controls.Add(this.label1);
             this.Name = "WildAreaForm";
             this.Text = "WildAreaForm";
-            ((System.ComponentModel.ISupportInitialize)(this.NudLevel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,6 +184,5 @@
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown NudLevel;
     }
 }

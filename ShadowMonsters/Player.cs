@@ -84,6 +84,7 @@ namespace ShadowMonsters
         public Point Tile
         {
             get { return tile; }
+            internal set { tile = value; }
         }
         #endregion
 

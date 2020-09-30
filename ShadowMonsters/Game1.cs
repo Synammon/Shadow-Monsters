@@ -37,6 +37,9 @@ namespace ShadowMonsters
         private readonly MainMenuState mainMenuState;
         private readonly OptionState optionState;
         private readonly NewGameState newGameState;
+        private readonly StartMonsterBattleState startMonsterBattleState;
+
+        public StartMonsterBattleState StartMonsterBattleState => startMonsterBattleState;
         public NewGameState NewGameState => newGameState;
 
         private readonly TitleState titleState;
@@ -120,6 +123,7 @@ namespace ShadowMonsters
             titleState = new TitleState(this);
             yesNoState = new YesNoState(this);
             loadingState = new LoadingState(this);
+            startMonsterBattleState = new StartMonsterBattleState(this);
 
             stateManager.PushState(titleState);
             ConversationManager.Instance.CreateConversations(this);

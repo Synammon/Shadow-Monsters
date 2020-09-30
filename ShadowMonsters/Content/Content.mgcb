@@ -2501,12 +2501,6 @@
 /processorParam:TextureFormat=Color
 /build:GUI/textbox.png
 
-#begin Music/Augustin_C_-_22_-_Enchanted_Village.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/Augustin_C_-_22_-_Enchanted_Village.mp3
-
 #begin ShadowMonsterImages/airDragon.png
 /importer:TextureImporter
 /processor:TextureProcessor

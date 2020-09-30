@@ -283,6 +283,14 @@ namespace ShadowEditor
             {
                 brushSize = 8;
             }
+
+            if (Xin.CheckKeyReleased(Keys.A) && frameCount > 5 && world != null && world.Maps.Count > 0)
+            {
+                frameCount = 0;
+                WildAreaListForm frm = new WildAreaListForm(world.Map, Content);
+                frm.ShowDialog();
+            }
+
             if (Xin.CheckKeyReleased(Keys.N) && frameCount > 5)
             {
                 NewMapForm form = new NewMapForm(GraphicsDevice);

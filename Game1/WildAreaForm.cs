@@ -36,7 +36,7 @@ namespace ShadowEditor
         {
             if (LstAvailable.SelectedIndex >= 0)
             {
-                LstSelected.Items.Add(LstAvailable.SelectedItem + ":" + NudLevel.Value);
+                LstSelected.Items.Add(LstAvailable.SelectedItem);
                 LstAvailable.Items.RemoveAt(LstAvailable.SelectedIndex);
             }
         }
