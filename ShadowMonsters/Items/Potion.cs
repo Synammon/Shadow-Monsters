@@ -8,10 +8,12 @@ namespace ShadowMonsters.Items
         public string Name { get { return "Potion"; } }
         public int Price { get { return 200; } }
         public bool Usable => true;
+        public ItemTarget Target => ItemTarget.Self;
 
-        public void Apply(ShadowMonster monster)
+        public bool Apply(ShadowMonster monster)
         {
             monster.Heal(50);
+            return false;
         }
     }
 }

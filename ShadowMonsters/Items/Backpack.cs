@@ -106,6 +106,8 @@ namespace ShadowMonsters.Items
                     return new Potion();
                 case "Antidote":
                     return new Antidote();
+                case "Binding Scroll":
+                    return new BindingScroll();
                 default:
                     return null;
             }
@@ -124,6 +126,8 @@ namespace ShadowMonsters.Items
                     return new Potion();
                 case "Antidote":
                     return new Antidote();
+                case "Binding Scroll":
+                    return new BindingScroll();
                 default:
                     return null;
             }

@@ -45,6 +45,13 @@ namespace ShadowMonsters
         private readonly TitleState titleState;
         private readonly LoadingState loadingState;
         private readonly YesNoState yesNoState;
+        private readonly BindFailureState bindFailureState;
+        private readonly BindSuccessState bindSuccessState;
+        private readonly MessageState messageState;
+
+        public BindFailureState BindFailureState => bindFailureState;
+        public BindSuccessState BindSuccessState => bindSuccessState;
+        public MessageState MessageState => messageState;
 
         public TitleState TitleState => titleState;
         public LoadingState LoadingState => loadingState;
@@ -124,6 +131,9 @@ namespace ShadowMonsters
             yesNoState = new YesNoState(this);
             loadingState = new LoadingState(this);
             startMonsterBattleState = new StartMonsterBattleState(this);
+            bindFailureState = new BindFailureState(this);
+            bindSuccessState = new BindSuccessState(this);
+            messageState = new MessageState(this);
 
             stateManager.PushState(titleState);
             ConversationManager.Instance.CreateConversations(this);

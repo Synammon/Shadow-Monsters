@@ -80,6 +80,8 @@
     <Compile Include="GameStates\BaseGameState.cs" />
     <Compile Include="GameStates\BattleOverState.cs" />
     <Compile Include="GameStates\BattleState.cs" />
+    <Compile Include="GameStates\BindFailureState.cs" />
+    <Compile Include="GameStates\BindSuccessState.cs" />
     <Compile Include="GameStates\ConversationState.cs" />
     <Compile Include="GameStates\DamageState.cs" />
     <Compile Include="GameStates\GamePlayState.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="GameStates\LevelUpState.cs" />
     <Compile Include="GameStates\LoadingState.cs" />
     <Compile Include="GameStates\MainMenuState.cs" />
+    <Compile Include="GameStates\MessageState.cs" />
     <Compile Include="GameStates\NewGameState.cs" />
     <Compile Include="GameStates\OptionState.cs" />
     <Compile Include="GameStates\ShadowMonsterSelectionState.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="GameStates\YesNoState.cs" />
     <Compile Include="Items\Antidote.cs" />
     <Compile Include="Items\Backpack.cs" />
+    <Compile Include="Items\BindingScroll.cs" />
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\Potion.cs" />
     <Compile Include="Player.cs" />

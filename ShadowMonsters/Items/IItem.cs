@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace ShadowMonsters.Items
 {
+    public enum ItemTarget { Self, Enemy }
+
     public interface IItem
     {
         string Name { get; }
         int Price { get; }
         bool Usable { get; }
-        void Apply(ShadowMonster monster);
+        ItemTarget Target { get; }
+        bool Apply(ShadowMonster monster);
     }
 }

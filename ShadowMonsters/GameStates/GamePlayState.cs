@@ -578,6 +578,7 @@ namespace ShadowMonsters.GameStates
 
             m.Backpack.AddItem("Potion", 99);
             m.Backpack.AddItem("Antidote", 10);
+            m.Backpack.AddItem("Binding Scroll", 99);
 
             map.CharacterLayer.Characters.Add(m.SourceTile, m);
 

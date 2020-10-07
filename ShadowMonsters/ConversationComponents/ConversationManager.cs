@@ -79,6 +79,12 @@ namespace ShadowMonsters.ConversationComponents
                 new SceneAction() { Action = ActionType.Teach, Parameter = "none" });
             options.Add(teach);
 
+            SceneOption rest = new SceneOption(
+                "Rest",
+                "Rest",
+                new SceneAction { Action = ActionType.Rest, Parameter = "none" });
+            options.Add(rest);
+
             SceneOption option = new SceneOption(
                 "Good bye.",
                 "",
@@ -105,8 +111,23 @@ namespace ShadowMonsters.ConversationComponents
                 new SceneAction() { Action = ActionType.End, Parameter = "none" });
 
             options.Add(option);
-
             c.AddScene("Teach", scene);
+
+            options = new List<SceneOption>();
+
+            scene = new GameScene(
+                gameRef,
+                "I have restored your shadow monsters' health.",
+                options);
+            options.Add(option);
+
+            option = new SceneOption(
+                "Goodbye",
+                "",
+                new SceneAction() { Action = ActionType.End, Parameter = "none" });
+
+            c.AddScene("Rest", scene);
+            
             ConversationList.Add("PaulHello", c);
 
             c = new Conversation("BonnieHello", "Hello");

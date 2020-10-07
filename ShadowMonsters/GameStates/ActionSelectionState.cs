@@ -43,6 +43,8 @@ namespace ShadowMonsters.GameStates
 
         public static bool IsTrainerBattle { get; set; }
 
+        public ShadowMonster EnemyShadowMonster => enemy;
+
         public ActionSelectionState(Game game) : base(game)
         {
             playerRect = new Rectangle(10, 90, 400, 400);
@@ -134,6 +136,7 @@ namespace ShadowMonsters.GameStates
                 }
                 if (scene.SelectedIndex == 2)
                 {
+                    manager.PushState(GameRef.UseItemState);
                 }
                 if (scene.SelectedIndex == 3)
                 {

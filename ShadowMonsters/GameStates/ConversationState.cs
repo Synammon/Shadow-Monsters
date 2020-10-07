@@ -97,6 +97,7 @@ namespace ShadowMonsters.GameStates
                         CheckQuest();
                         break;
                     case ActionType.Rest:
+                        Game1.Player.HealBattleShadowMonsters();
                         conversation.ChangeScene(conversation.CurrentScene.OptionScene);
                         break;
                     case ActionType.Shop:
@@ -130,7 +131,7 @@ namespace ShadowMonsters.GameStates
             string scene = conversation.CurrentScene.OptionScene;
 
             conversation.CurrentScene.Options.RemoveAt(conversation.CurrentScene.SelectedIndex);
-            conversation.CurrentScene.SelectedIndex--;
+            conversation.CurrentScene.SelectedIndex = 0;
             conversation.ChangeScene(scene);
         }
 

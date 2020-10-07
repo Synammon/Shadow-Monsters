@@ -73,11 +73,54 @@ namespace ShadowMonsters.GameStates
                 Xin.CheckKeyReleased(Keys.Enter) ||
                 (mouseOver && Xin.CheckMouseReleased(MouseButtons.Left)))
             {
+                item = Game1.Player.Backpack.PeekItem(Game1.Player.Backpack.Items[selected].Name);
                 if (Game1.Player.BattleShadowMonsters[selected] != null)
                 {
-                    item.Apply(Game1.Player.BattleShadowMonsters[selected]);
-                    manager.PopState();
-                    manager.PopState();
+                    if (item.Target == ItemTarget.Self)
+                    {
+                        item.Apply(Game1.Player.BattleShadowMonsters[selected]);
+                        manager.PopState();
+                        manager.PopState();
+                    }
+                    else
+                    {
+                        if (ActionSelectionState.IsTrainerBattle)
+                        {
+                            manager.PushState(GameRef.MessageState);
+                            GameRef.MessageState.Message = "You can't use that on bound monsters.";
+                        }
+                        else
+                        {
+                            bool result = Game1.Player.Backpack.GetItem(
+                                Game1.Player.Backpack.Items[selected].Name).Apply(
+                                    GameRef.ActionSelectionState.EnemyShadowMonster);
+                            if (result)
+                            {
+                                manager.PopState();
+                                manager.PushState(GameRef.BindSuccessState);
+                                GameRef.BindSuccessState.Monster = GameRef.ActionSelectionState.EnemyShadowMonster;
+                                GameRef.BattleState.Visible = true;
+
+                                Game1.Player.AddShadowMonster(GameRef.ActionSelectionState.EnemyShadowMonster);
+
+                                for (int i = 0; i < Player.MaxShadowMonsters; i++)
+                                {
+                                    if (Game1.Player.BattleShadowMonsters[i] == null)
+                                    {
+                                        Game1.Player.BattleShadowMonsters[i] = GameRef.ActionSelectionState.EnemyShadowMonster;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                manager.PopState();
+                                manager.PushState(GameRef.BindFailureState);
+                                GameRef.BindFailureState.Monster = GameRef.ActionSelectionState.EnemyShadowMonster;
+                                GameRef.BattleState.Visible = true;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -105,7 +148,21 @@ namespace ShadowMonsters.GameStates
             Rectangle healthSourceRect = new Rectangle(10, 50, 290, 20);
             Point cursor = Xin.MouseAsPoint;
 
-            for (int i = 0; i < Game1.Player.BattleShadowMonsters.Length; i++)
+            GameRef.SpriteBatch.DrawString(
+                FontManager.GetFont("testfont"),
+                "Item",
+                new Vector2(120, 5).Scale(Settings.Scale),
+                Color.Red);
+
+            GameRef.SpriteBatch.DrawString(
+                FontManager.GetFont("testfont"),
+                "Quantity",
+                new Vector2(800, 5).Scale(Settings.Scale),
+                Color.Red);
+
+            int i = 0;
+
+            foreach (var v in Game1.Player.Backpack.Items)
             {
                 tint = Color.White;
 
@@ -113,39 +170,34 @@ namespace ShadowMonsters.GameStates
                 {
                     tint = Color.Red;
                 }
-                if (Game1.Player.BattleShadowMonsters[i] != null)
-                {
-                    ShadowMonster a = Game1.Player.BattleShadowMonsters[i];
-                    GameRef.SpriteBatch.Draw(a.Texture, destination, Color.White);
 
-                    if (destination.Contains(cursor) || playerBorderRect.Contains(cursor))
+                IItem item = Game1.Player.Backpack.PeekItem(v.Name);
+
+                if (item != null)
+                {
+                    Rectangle r = new Rectangle(0, 74 * i + 24, 1280, 64).Scale(Settings.Scale);
+
+                    if (r.Contains(Xin.MouseAsPoint))
                     {
                         selected = i;
                         mouseOver = true;
                     }
 
-                    GameRef.SpriteBatch.Draw(shadowMonsterBorder, playerBorderRect, Color.White);
                     GameRef.SpriteBatch.DrawString(
                         FontManager.GetFont("testfont"),
-                        a.DisplayName,
-                        playerName,
+                        v.Name,
+                        new Vector2(120, 74 * i + 45).Scale(Settings.Scale),
                         tint);
-                    float playerHealth = (float)a.CurrentHealth / (float)a.GetHealth();
-                    MathHelper.Clamp(playerHealth, 0f, 1f);
-                    playerHealthRect.Width = (int)(playerHealth * 384);
-                    GameRef.SpriteBatch.Draw(
-                        shadowMonsterHealth,
-                        playerHealthRect,
-                        healthSourceRect,
-                        Color.White);
-                    playerBorderRect.Y += 120;
-                    playerName.Y += 120;
-                    playerHealthRect.Y += 120;
+
+                    GameRef.SpriteBatch.DrawString(
+                        FontManager.GetFont("testfont"),
+                        v.Count.ToString(),
+                        new Vector2(800, 74 * i + 45).Scale(Settings.Scale),
+                        tint);
+
+                    i++;
                 }
-
-                destination.Y += 120;
             }
-
             GameRef.SpriteBatch.End();
         }
 

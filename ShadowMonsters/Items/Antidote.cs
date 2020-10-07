@@ -15,10 +15,13 @@ namespace ShadowMonsters.Items
 
         public bool Usable => true;
 
+        public ItemTarget Target => ItemTarget.Self;
 
-        public void Apply(ShadowMonster monster)
+
+        public bool Apply(ShadowMonster monster)
         {
             monster.IsPoisoned = false;
+            return true;
         }
     }
 }
